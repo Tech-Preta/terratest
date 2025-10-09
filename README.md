@@ -41,14 +41,6 @@ Desenvolvido pela [Gruntwork](https://gruntwork.io/), o Terratest permite escrev
 - Reduz custos de correção de bugs em produção
 - Otimiza o uso de recursos cloud
 
-## 📋 Pré-requisitos
-
-Para executar este projeto, você precisará ter instalado:
-
-- **Go** 1.21 ou superior ([Download](https://golang.org/dl/))
-- **Terraform** 1.0 ou superior ([Download](https://www.terraform.io/downloads))
-- **Git** para clonar o repositório
-
 ### Instalação do Go
 
 ```bash
