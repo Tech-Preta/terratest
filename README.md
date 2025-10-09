@@ -1,4 +1,4 @@
-# Terratest - Demonstração Completa
+# Terratest
 
 [![Terratest CI](https://github.com/nataliagranato/terratest/actions/workflows/terratest.yml/badge.svg)](https://github.com/nataliagranato/terratest/actions/workflows/terratest.yml)
 
