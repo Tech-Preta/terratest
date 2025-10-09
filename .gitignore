@@ -17,7 +17,6 @@ terraform.rc
 *.test
 *.out
 vendor/
-go.sum
 
 # IDE
 .idea/
