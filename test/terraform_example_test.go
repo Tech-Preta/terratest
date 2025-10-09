@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gruntwork-io/terratest/modules/files"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
@@ -14,10 +15,16 @@ import (
 func TestTerraformExample(t *testing.T) {
 	t.Parallel()
 
+	// Copia o código Terraform para um diretório temporário único
+	tmpDir, err := files.CopyTerraformFolderToTemp("../", t.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	// Configuração das opções do Terraform
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		// Caminho para o código Terraform
-		TerraformDir: "../",
+		// Caminho para o código Terraform copiado
+		TerraformDir: tmpDir,
 
 		// Variáveis para passar ao código Terraform
 		Vars: map[string]interface{}{
@@ -44,7 +51,7 @@ func TestTerraformExample(t *testing.T) {
 	assert.Equal(t, "testing", environment)
 
 	// Verifica se o arquivo foi criado no sistema de arquivos
-	absPath, err := filepath.Abs(filepath.Join("../", filePath))
+	absPath, err := filepath.Abs(filepath.Join(tmpDir, filePath))
 	assert.NoError(t, err)
 
 	// Verifica se o arquivo existe
@@ -69,8 +76,14 @@ func TestTerraformWithDifferentEnvironments(t *testing.T) {
 		t.Run(env, func(t *testing.T) {
 			t.Parallel()
 
+			// Copia o código Terraform para um diretório temporário único
+			tmpDir, err := files.CopyTerraformFolderToTemp("../", "test-"+env)
+			if err != nil {
+				t.Fatal(err)
+			}
+
 			terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-				TerraformDir: "../",
+				TerraformDir: tmpDir,
 				Vars: map[string]interface{}{
 					"content":     fmt.Sprintf("Content for %s environment", env),
 					"filename":    fmt.Sprintf("%s-output.txt", env),
